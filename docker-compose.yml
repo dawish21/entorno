@@ -1,16 +1,13 @@
-version: "3"
+version: '3'
 services:
   proxy:
     hostname: proxy
     image: jwilder/nginx-proxy
     container_name: proxydaw
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    networks:
-      - frontend
-      - backend
   web1:
     image: php:7.3-apache
     container_name: web1
@@ -20,8 +17,6 @@ services:
     environment:
       - VIRTUAL_HOST=web1.com,www.web1.com
     restart: always
-    networks:
-      - backend
   web2:
     image: php:7.3-apache
     container_name: web2
@@ -31,8 +26,3 @@ services:
     environment:
       - VIRTUAL_HOST=web2.com,www.web2.com
     restart: always
-    networks:
-      - backend
-networks:
-  frontend:
-  backend:

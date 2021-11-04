@@ -29,3 +29,4 @@
   - El contenido de la carpeta "sitios/web1" va a ser servido por el apache.
   - De momento es poco importante pero definimos el host virtual de nuestro sitio como "web1.com,www.web1.com"
 - Ya puedes acceder a http://localhost.
+- Idem con el sitio web2.com. De momento no podemos usar el mismo puerto. Observa que web2 usa el puerto 81.

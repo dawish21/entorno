@@ -24,9 +24,14 @@
 
 # Configuración de esta rama
 
-- Se define unicamente un contenedor con un servicio web apache con php.
-  - El puerto 80 del contenedor se mapea al 80 del anfitrión
-  - El contenido de la carpeta "sitios/web1" va a ser servido por el apache.
-  - De momento es poco importante pero definimos el host virtual de nuestro sitio como "web1.com,www.web1.com"
-- Ya puedes acceder a http://localhost.
-- Idem con el sitio web2.com. De momento no podemos usar el mismo puerto. Observa que web2 usa el puerto 81.
+- Se definen varios servicios
+  - proxy: recibe todas las peticiones web y las reparte entre los distintos servicios http (apace). Usamos la imagen jwilder/nginx-proxy
+  - web1: sitio web de ejemplo. Imagen php:7.3-apache
+  - web2: sitio web de ejemplo. Imagen php:7.3-apache
+- Ya puedes acceder por el puerto 80 a dos sitios distintos.
+- No olivdes configurar correctamente el /etc/hosts
+
+    ```
+    127.0.0.1	web1.com www.web1.com
+    127.0.0.1	web2.com 
+    ```

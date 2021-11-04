@@ -18,22 +18,40 @@ services:
       - VIRTUAL_HOST=web1.com,www.web1.com
     restart: always
   dwes: #sitio con material del profesor
-    build: ./dockerfiles/mvc
+    build: ./dockerfiles/dwes
     container_name: dwes
     hostname: dwes
     volumes:
-      - ./sitios/mvc:/var/www/html
+      - ./sitios/dwes:/var/www/html
     environment:
       - VIRTUAL_HOST=dwes.local
     restart: always
   midwes: #sitio con material del profesor
-    build: ./dockerfiles/mvc
+    build: ./dockerfiles/dwes
     container_name: midwes
     hostname: midwes
     volumes:
-      - ./sitios/mvc:/var/www/html
+      - ./sitios/midwes:/var/www/html
     environment:
       - VIRTUAL_HOST=midwes.local
+    restart: always
+  mvc: #sitio con material del profesor
+    build: ./dockerfiles/mvc
+    container_name: mvc
+    hostname: mvc
+    volumes:
+      - ./sitios/mvc:/var/www/html
+    environment:
+      - VIRTUAL_HOST=mvc.local
+    restart: always
+  mimvc: #sitio con material del profesor
+    build: ./dockerfiles/mvc
+    container_name: mimvc
+    hostname: mimvc
+    volumes:
+      - ./sitios/mimvc:/var/www/html
+    environment:
+      - VIRTUAL_HOST=mimvc.local
     restart: always
   pelu: #sitio para el proyecto de peluquería.
     build: ./dockerfiles/mvc

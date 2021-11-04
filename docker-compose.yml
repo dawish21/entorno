@@ -12,6 +12,8 @@ services:
     image: php:7.3-apache
     container_name: web1
     hostname: web1
+    ports:
+      - '80:80'
     volumes:
       - ./sitios/web1:/var/www/html
     environment:
@@ -21,6 +23,8 @@ services:
     image: php:7.3-apache
     container_name: web2
     hostname: web2
+    ports:
+      - '81:80'
     volumes:
       - ./sitios/web2:/var/www/html
     environment:

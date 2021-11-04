@@ -24,8 +24,14 @@
 
 # Configuración de esta rama
 
-- Se define unicamente un contenedor con un servicio web apache con php.
-  - El puerto 80 del contenedor se mapea al 80 del anfitrión
-  - El contenido de la carpeta "sitios/web1" va a ser servido por el apache.
-  - De momento es poco importante pero definimos el host virtual de nuestro sitio como "web1.com,www.web1.com"
-- Ya puedes acceder a http://localhost.
+- Se definen varios servicios
+  - proxy: recibe todas las peticiones web y las reparte entre los distintos servicios http (apace). Usamos la imagen jwilder/nginx-proxy
+  - web1: sitio web de ejempl. Imagen php:7.3-apache
+  - dwes: ejercicios resueltos en clase.  Podría valer la imagen de arriba pero usamos un Dockerfile para añadir mysql por si acaso es necesario.
+  - midwes: idem al anterior pero con ejercicios del alumno
+  - mvc: sitio web preparado para usar mvc. Misma imagen con Dockerfile para mysql
+    - Se puede clonar ahí el proyecto https://github.com/rafacabeza/mvc
+    - Ojo. Es necesario revisar las notas para usarlo correctamente: necesitará una bbdd, cargar los sql y en algún momento dar contraseña a los usuarios.
+  - mimvc: idem al anterior para usar mvc propio del alumno
+  - pelu: idem al anterior para el proyecto de peluquería
+- Cada uno de lis sitios anteriores requieren una carpeta en "sitios". Si no existe docker la creará vacía y habrá un error de "Forbidden" al estar vacía.

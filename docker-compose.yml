@@ -1,18 +1,15 @@
-version: "3"
+version: '3'
 services:
   proxy:
     hostname: proxy
     image: jwilder/nginx-proxy
     container_name: proxydaw
     ports:
-      - "80:80"
+      - '80:80'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    networks:
-      - frontend
-      - backend
-  web1:
-    image: php:7.3-apache
+  web1: #Sitio de ejemplo
+    image: php:7.3-apache # basta un apache con php
     container_name: web1
     hostname: web1
     volumes:
@@ -20,19 +17,53 @@ services:
     environment:
       - VIRTUAL_HOST=web1.com,www.web1.com
     restart: always
-    networks:
-      - backend
-  web2:
-    image: php:7.3-apache
-    container_name: web2
-    hostname: web2
+  dwes: #sitio con material del profesor
+    build: ./dockerfiles/mvc
+    container_name: dwes
+    hostname: dwes
     volumes:
-      - ./sitios/web2:/var/www/html
+      - ./sitios/mvc:/var/www/html
     environment:
-      - VIRTUAL_HOST=web2.com,www.web2.com
+      - VIRTUAL_HOST=dwes.local
     restart: always
-    networks:
-      - backend
-networks:
-  frontend:
-  backend:
+  midwes: #sitio con material del profesor
+    build: ./dockerfiles/mvc
+    container_name: midwes
+    hostname: midwes
+    volumes:
+      - ./sitios/mvc:/var/www/html
+    environment:
+      - VIRTUAL_HOST=midwes.local
+    restart: always
+  pelu: #sitio para el proyecto de peluquería.
+    build: ./dockerfiles/mvc
+    container_name: pelu
+    hostname: pelu
+    volumes:
+      #si no existe sitios/pelu se creará vacío (prop. root)
+      #dará error "forbidden"
+      - ./sitios/pelu:/var/www/html
+    environment:
+      - VIRTUAL_HOST=pelu.local
+    restart: always
+  db:
+    hostname: db
+    image: mysql:5.7
+    container_name: dbdaw
+    volumes:
+      - ./data/db:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=demo
+      - MYSQL_USER=dbuser
+      - MYSQL_PASSWORD=secret
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    environment:
+      - MYSQL_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=password
+      - PMA_HOST=db
+      - VIRTUAL_HOST=phpmyadmin.docker
